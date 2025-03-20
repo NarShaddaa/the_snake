@@ -58,7 +58,8 @@ class Apple(GameObject):  # Дочерний класс яблоко
     def randomize_position(self):
         '''случайная позиция для яблока.'''
         self.position = (
-            randint(0, (SCREEN_WIDTH // GRID_SIZE) - 1) * GRID_SIZE, # учесть что индексы сеток начинаются с 0
+            # учесть что индексы сеток начинаются с 0
+            randint(0, (SCREEN_WIDTH // GRID_SIZE) - 1) * GRID_SIZE,
             randint(0, (SCREEN_HEIGHT // GRID_SIZE) - 1) * GRID_SIZE
         )
 
@@ -72,6 +73,7 @@ class Snake(GameObject):  # Дочерний класс змея
     def __init__(self):
         super().__init__()
         self.reset()
+
     def reset(self):
         '''сброс змеи в начальное состояние'''
         self.length = 1
