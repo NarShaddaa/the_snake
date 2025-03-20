@@ -53,6 +53,14 @@ class Apple(GameObject):  # Дочерний класс яблоко
     def __init__(self):
         super().__init__()
         self.body_color = APPLE_COLOR
+        self.randomize_position()  # случайная начальная позиция яблока
+
+    def randomize_position(self):
+        '''случайная позиция для яблока.'''
+        self.position = (
+            randint(0, (SCREEN_WIDTH // GRID_SIZE) - 1) * GRID_SIZE, # учесть что индексы сеток начинаются с 0
+            randint(0, (SCREEN_HEIGHT // GRID_SIZE) - 1) * GRID_SIZE
+        )
 
     def draw(self):  # Метод - рисователь яблока
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
@@ -63,6 +71,9 @@ class Apple(GameObject):  # Дочерний класс яблоко
 class Snake(GameObject):  # Дочерний класс змея
     def __init__(self):
         super().__init__()
+        self.reset()
+    def reset(self):
+        '''сброс змеи в начальное состояние'''
         self.length = 1
         self.positions = [self.position]
         self.direction = RIGHT
@@ -153,13 +164,10 @@ def main():
         snake.move()
         if snake.positions[0] == apple.position:  # если змея съела яблоко
             snake.length += 1  # увеличить ее длинну на 1
-            apple.position = (  # создание нового яблока
-                # учесть что индексы сеток начинаются с 0
-                randint(0, (SCREEN_WIDTH // GRID_SIZE) - 1) * GRID_SIZE,
-                randint(0, (SCREEN_HEIGHT // GRID_SIZE) - 1) * GRID_SIZE
-            )
+            apple.randomize_position()
         if snake.positions[0] in snake.positions[1:]:
             reset()  # сброс игры
+            apple.randomize_position()
         apple.draw()
         snake.draw()
         pygame.display.update()  # Обновление экрана
