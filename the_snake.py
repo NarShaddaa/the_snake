@@ -93,7 +93,7 @@ class Snake(GameObject):  # Дочерний класс змея
         self.last = None
 
     def get_head_position(self):
-        """Возвращает текущее положение головы змейки."""
+        """Возвращает текущее положение головы змеи."""
         return self.positions[0]
 
     def move(self):
