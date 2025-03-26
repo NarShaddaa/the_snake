@@ -1,5 +1,5 @@
 import sys
-from random import choice, randint  # теперь понятно
+from random import choice, randint
 
 import pygame
 
@@ -91,10 +91,8 @@ class Apple(GameObject):  # Дочерний класс яблоко
 
     def __init__(self, body_color=random_color, occupied_positions=None):
         super().__init__(body_color=body_color)  # установка цвета яблока
-        self.occupied_positions = (
-            occupied_positions if occupied_positions is not None else []
-        )
-        self.randomize_position(self.occupied_positions)
+        # передача без сохранения
+        self.randomize_position(occupied_positions or [])
 
     def randomize_position(self, occupied_positions):  # параметр для ячейки
         """Случайная позиция для яблока."""
@@ -165,12 +163,6 @@ class Snake(GameObject):  # Дочерний класс змея
         """Отрисовывает змею с помощью базового класса."""
         for position in self.positions:
             self.draw_cell(position=position)
-
-        # Отрисовка тела змейки
-        for position in self.positions[1:]:
-            rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
-            pygame.draw.rect(screen, self.body_color, rect)
-            pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
     def update_direction(self):
         """Метод - руль для головы змеи."""
